@@ -7,15 +7,15 @@ Set options for downloading files.
 ```py
 pewn.Option(
     file_name = "index.html",
-    folder = "./pypi"
+    folder = "./downloaded" # ("downloaded", )
 )
 ```
 
 # Init
 
 - file_name (`str`): File name.
-- folder (`str`, `list`): Folder list or path-like string.
-  - Example: `["images", "random"]` is `./images/random`
+- folder (`str`, `tuple`): Folder tuple or path-like string.
+  - Example: `("images", "random", )` is `./images/random`
   - Also you can use like this: `./images/random`
 
 # Attributes

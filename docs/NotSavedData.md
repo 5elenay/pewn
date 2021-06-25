@@ -32,6 +32,6 @@ Write data to file.
 
   result.write(pewn.Option(
       file_name="photo.png",
-      folder=["my", "photo", "folder", "location"]
+      folder=("my", "photo", "folder", "location", )
   ))
   ```

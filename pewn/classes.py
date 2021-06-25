@@ -21,13 +21,13 @@ class Option:
         folder (str): Converted folder.
     """
 
-    def __init__(self, file_name: str, folder: Union[str, list] = "./") -> None:
+    def __init__(self, file_name: str, folder: Union[str, tuple] = "./") -> None:
         raise_error(file_name, "file_name", str)
-        raise_error(folder, "folder", (list, str))
+        raise_error(folder, "folder", (tuple, str))
 
         self.file_name: str = file_name
         self.folder: str = f"./{'/'.join(folder)}" if isinstance(folder,
-                                                                 list) else folder
+                                                                 tuple) else folder
 
         return None
 

@@ -10,7 +10,7 @@ classifiers = [
 
 setup(
     name='pewn',
-    version='0.0.1',
+    version='0.1.0',
     description='📦 Another Python library for downloading files from URL.',
     long_description_content_type="text/markdown",
     long_description=open('README.md').read(),
