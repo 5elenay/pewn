@@ -27,6 +27,7 @@ Write data to file.
 - Returns:
   - `str`: Saved path.
 - Example:
+
   ```py
   result = await pewn.download("https://picsum.photos/500/300") # -> <NotSavedData>
 

@@ -13,6 +13,7 @@ Download data from URL.
 
   - url (`str`): URL for fetch and download.
   - option (`Option`): `<Option>` object. **Optional**
+  - `**kwargs`: Parameters for aiohttp get function. (proxy etc...)
 
 - Returns:
   - `str`: Saved path.
@@ -28,6 +29,7 @@ Download data from URL.
   ```py
   result = await pewn.download("https://picsum.photos/500/300") # -> <NotSavedData>
   ```
+
 ## download_multiple
 
 Download multiple file async.
@@ -36,6 +38,7 @@ Download multiple file async.
 
   - urls (`tuple`): URLs for fetch and download.
   - options (`tuple, Option`): `<Option>` objects in tuple or only one `<Option>` object. **Optional**
+  - `**kwargs`: Parameters for aiohttp get function. (proxy etc...)
 
 - Returns:
   - `list` (`str`): Saved paths.
@@ -43,7 +46,7 @@ Download multiple file async.
 - Example:
   ```py
   result = await pewn.download_multiple(
-    tuple(["https://picsum.photos/500/300" for _ in range(10)]), 
+    tuple(["https://picsum.photos/500/300" for _ in range(10)]),
     pewn.Option(
       file_name = "photo.png",
       folder = "./photos/random"
@@ -52,7 +55,7 @@ Download multiple file async.
   ```
   ```py
   result = await pewn.download_multiple(
-    ("https://picsum.photos/500/300", "https://picsum.photos/500/300"), 
+    ("https://picsum.photos/500/300", "https://picsum.photos/500/300"),
     (
       pewn.Option(
         file_name = "photo_one.png",
@@ -67,7 +70,7 @@ Download multiple file async.
   ```
   ```py
   result = await pewn.download_multiple(
-    tuple(["https://picsum.photos/500/300" for _ in range(25)]) 
+    tuple(["https://picsum.photos/500/300" for _ in range(25)])
   ) # -> [<NotSavedData>, <NotSavedData>, ...]
   ```
 

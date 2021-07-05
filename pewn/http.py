@@ -7,12 +7,13 @@ from os import makedirs, path
 from asyncio import gather
 
 
-async def download(url: str, option: Option = None) -> Union[str, NotSavedData]:
+async def download(url: str, option: Option = None, **kwargs) -> Union[str, NotSavedData]:
     """Download data from URL.
 
     Parameters:
         url (str): URL for fetch and download.
         option (Option): Option object. [Optional]
+        **kwargs: Settings for aiohttp request. 
 
     Returns:
         str: Saved path.
@@ -28,8 +29,8 @@ async def download(url: str, option: Option = None) -> Union[str, NotSavedData]:
         raise_error(option, "option", Option)
         write_file = True
 
-    async with ClientSession() as session:
-        async with session.get(url) as response:
+    async with ClientSession(trust_env=True) as session:
+        async with session.get(url, **kwargs) as response:
             data = await response.read()
 
             if write_file:
@@ -43,12 +44,13 @@ async def download(url: str, option: Option = None) -> Union[str, NotSavedData]:
     return full_path or NotSavedData(data, url)
 
 
-async def download_multiple(urls: tuple, options: Union[tuple, Option] = None):
+async def download_multiple(urls: tuple, options: Union[tuple, Option] = None, **kwargs):
     """Download multiple file.
 
     Parameters:
         urls (tuple): List of URL that will be downloaded.
         options (tuple, Option): List of Option or only one Option object. [Optional]
+        **kwargs: Settings for aiohttp request. 
 
     Returns:
         list (str): Saved paths.
@@ -64,7 +66,7 @@ async def download_multiple(urls: tuple, options: Union[tuple, Option] = None):
 
     if isinstance(options, tuple):
         results = await gather(*[
-            download(url, opt) for url, opt in zip(urls, options)
+            download(url, opt, **kwargs) for url, opt in zip(urls, options)
         ])
     elif isinstance(options, Option):
         def change_file_name(option: Option, number: int):
@@ -78,11 +80,11 @@ async def download_multiple(urls: tuple, options: Union[tuple, Option] = None):
             return ".".join(splitted_name)
 
         results = await gather(*[
-            download(url, opt) for url, opt in zip(urls, [Option(file_name=change_file_name(options, i + 1), folder=options.folder) for i, _ in enumerate(urls)])
+            download(url, opt, **kwargs) for url, opt in zip(urls, [Option(file_name=change_file_name(options, i + 1), folder=options.folder) for i, _ in enumerate(urls)])
         ])
     else:
         results = await gather(*[
-            download(url) for url in urls
+            download(url, **kwargs) for url in urls
         ])
 
     return results
